@@ -232,7 +232,7 @@
                                     <goal>npm</goal>
                                 </goals>
                                 <configuration>
-                                    <arguments>install</arguments>
+                                    <arguments>i</arguments>
                                 </configuration>
                             </execution>
                             <execution>
