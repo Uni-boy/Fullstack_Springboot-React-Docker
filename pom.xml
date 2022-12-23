@@ -223,7 +223,7 @@
                                 </goals>
                                 <configuration>
                                     <nodeVersion>v16.18.1</nodeVersion>
-<!--                                    <npmVersion>8.5.5</npmVersion>-->
+                                    <npmVersion>8.5.5</npmVersion>
                                 </configuration>
                             </execution>
                             <execution>
@@ -232,7 +232,7 @@
                                     <goal>npm</goal>
                                 </goals>
                                 <configuration>
-                                    <arguments>i</arguments>
+                                    <arguments>install</arguments>
                                 </configuration>
                             </execution>
                             <execution>
