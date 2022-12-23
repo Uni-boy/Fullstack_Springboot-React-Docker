@@ -1,3 +1,8 @@
-@root-entry-name: default;
+@import '../../style/themes/index';
+@import '../../style/mixins/index';
 
-@import './index-pure.less';
+@popconfirm-prefix-cls: ~'@{ant-prefix}-popconfirm';
+
+.@{popconfirm-prefix-cls} {
+  z-index: @zindex-popoconfirm;
+}

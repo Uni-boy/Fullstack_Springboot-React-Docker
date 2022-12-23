@@ -1,40 +1,36 @@
 import {useState, useEffect} from 'react'
-import {getAllStudents, deleteStudent} from "./client";
-import {Avatar, Badge, Breadcrumb, Button, Empty, Image, Layout, Menu, Popconfirm, Radio, Spin, Table, Tag} from 'antd';
-import StudentDrawerForm from "./StudentDrawerForm.js";
+import {deleteStudent, getAllStudents} from "./client";
 import {
-    DesktopOutlined, DownloadOutlined,
+    Layout,
+    Menu,
+    Breadcrumb,
+    Table,
+    Spin,
+    Empty,
+    Button,
+    Badge,
+    Tag,
+    Avatar,
+    Radio, Popconfirm, Image, Divider
+} from 'antd';
+
+import {
+    DesktopOutlined,
+    PieChartOutlined,
     FileOutlined,
-    LoadingOutlined,
-    PieChartOutlined, PlusOutlined, QuestionCircleOutlined,
     TeamOutlined,
     UserOutlined,
+    LoadingOutlined,
+    PlusOutlined
 } from '@ant-design/icons';
+import StudentDrawerForm from "./StudentDrawerForm";
+
 import './App.css';
 import {errorNotification, successNotification} from "./Notification";
 
-function getItem(label, key, icon, children) {
-    return {
-        key,
-        icon,
-        children,
-        label,
-    };
-}
-
-const items = [
-    getItem('Option 1', '1', <PieChartOutlined/>),
-    getItem('Option 2', '2', <DesktopOutlined/>),
-    getItem('User', 'sub1', <UserOutlined/>, [
-        getItem('Tom', '3'),
-        getItem('Bill', '4'),
-        getItem('Alex', '5'),
-    ]),
-    getItem('Team', 'sub2', <TeamOutlined/>, [getItem('Team 1', '6'), getItem('Team 2', '8')]),
-    getItem('Files', '9', <FileOutlined/>),
-];
 
 const {Header, Content, Footer, Sider} = Layout;
+const {SubMenu} = Menu;
 
 const TheAvatar = ({name}) => {
     let trim = name.trim();
@@ -52,7 +48,7 @@ const TheAvatar = ({name}) => {
 
 const removeStudent = (studentId, callback) => {
     deleteStudent(studentId).then(() => {
-        successNotification("Student deleted", `Student with ${studentId} was deleted!`);
+        successNotification("Student deleted", `Student with ${studentId} was deleted`);
         callback();
     }).catch(err => {
         err.response.json().then(res => {
@@ -70,7 +66,8 @@ const columns = fetchStudents => [
         title: '',
         dataIndex: 'avatar',
         key: 'avatar',
-        render: (text, student) => <TheAvatar name={student.name}/>
+        render: (text, student) =>
+            <TheAvatar name={student.name}/>
     },
     {
         title: 'Id',
@@ -94,33 +91,23 @@ const columns = fetchStudents => [
     },
     {
         title: 'Actions',
-        dataIndex: 'action',
-        key: 'action',
+        key: 'actions',
         render: (text, student) =>
-            <>
-                <Radio.Group>
-                    <Popconfirm
-                        placement='topRight'
-                        title={`Are you sure to delete ${student.name}`}
-                        onConfirm={() => removeStudent(student.id, fetchStudents)}
-                        okText='Yes'
-                        cancelText='No'>
-                        <Radio.Button value='small'>Delete</Radio.Button>
-                    </Popconfirm>
-                    <Radio.Button value='small'>Edit</Radio.Button>
-                </Radio.Group>
-            </>
+            <Radio.Group>
+                <Popconfirm
+                    placement='topRight'
+                    title={`Are you sure to delete ${student.name}`}
+                    onConfirm={() => removeStudent(student.id, fetchStudents)}
+                    okText='Yes'
+                    cancelText='No'>
+                    <Radio.Button value="small">Delete</Radio.Button>
+                </Popconfirm>
+                <Radio.Button onClick={() => alert("TODO: Implement edit student")} value="small">Edit</Radio.Button>
+            </Radio.Group>
     }
 ];
 
-const antIcon = (
-    <LoadingOutlined
-        style={{
-            fontSize: 24,
-        }}
-        spin
-    />
-);
+const antIcon = <LoadingOutlined style={{fontSize: 24}} spin/>;
 
 function App() {
     const [students, setStudents] = useState([]);
@@ -140,10 +127,10 @@ function App() {
                     console.log(res);
                     errorNotification(
                         "There was an issue",
-                        `${res.message}[${res.status}][${res.error}]`
+                        `${res.message} [${res.status}] [${res.error}]`
                     )
                 });
-            }).finally(() => setFetching(false));
+            }).finally(() => setFetching(false))
 
     useEffect(() => {
         console.log("component is mounted");
@@ -152,25 +139,22 @@ function App() {
 
     const renderStudents = () => {
         if (fetching) {
-            return <Spin indicator={antIcon}/>;
+            return <Spin indicator={antIcon}/>
         }
         if (students.length <= 0) {
             return <>
+                <Button
+                    onClick={() => setShowDrawer(!showDrawer)}
+                    type="primary" shape="round" icon={<PlusOutlined/>} size="small">
+                    Add New Student
+                </Button>
                 <StudentDrawerForm
                     showDrawer={showDrawer}
                     setShowDrawer={setShowDrawer}
                     fetchStudents={fetchStudents}
                 />
-                <Tag>Number of students</Tag>
-                <Badge count={students.length > 0 ? students.length : 0} className={"site-badge-count-4"}/>
-                <br/><br/>
-                <Button
-                    onClick={() => setShowDrawer(!showDrawer)}
-                    type="primary" shape="round" icon={<PlusOutlined/>} size='medium'>
-                    Add New Student
-                </Button>
                 <Empty/>
-            </>;
+            </>
         }
         return <>
             <StudentDrawerForm
@@ -178,80 +162,78 @@ function App() {
                 setShowDrawer={setShowDrawer}
                 fetchStudents={fetchStudents}
             />
-            <Table dataSource={students}
-                   columns={columns(fetchStudents)}
-                   bordered
-                   title={() =>
-                       <>
-                           <Tag>Number of students</Tag>
-                           <Badge count={students.length > 0 ? students.length : 0} className={"site-badge-count-4"}/>
-                           <br/><br/>
-                           <Button
-                               onClick={() => setShowDrawer(!showDrawer)}
-                               type="primary" shape="round" icon={<PlusOutlined/>} size='medium'>
-                               Add New Student
-                           </Button>
-                       </>
-                   }
-                   pagination={{
-                       pageSize: 20,
-                   }}
-                   scroll={{
-                       y: 400,
-                   }}
-                   rowKey={(student) => student.id}
+            <Table
+                dataSource={students}
+                columns={columns(fetchStudents)}
+                bordered
+                title={() =>
+                    <>
+                        <Tag>Number of students</Tag>
+                        <Badge count={students.length} className="site-badge-count-4"/>
+                        <br/><br/>
+                        <Button
+                            onClick={() => setShowDrawer(!showDrawer)}
+                            type="primary" shape="round" icon={<PlusOutlined/>} size="small">
+                            Add New Student
+                        </Button>
+                    </>
+                }
+                pagination={{pageSize: 50}}
+                scroll={{y: 500}}
+                rowKey={student => student.id}
             />
         </>
-    };
+    }
 
-    return <Layout
-        style={{
-            minHeight: '100vh',
-        }}
-    >
-        <Sider collapsible collapsed={collapsed} onCollapse={setCollapsed}>
+    return <Layout style={{minHeight: '100vh'}}>
+        <Sider collapsible collapsed={collapsed}
+               onCollapse={setCollapsed}>
             <div className="logo"/>
-            <Menu theme="dark" defaultSelectedKeys={['1']} mode="inline" items={items}/>
+            <Menu theme="dark" defaultSelectedKeys={['1']} mode="inline">
+                <Menu.Item key="1" icon={<PieChartOutlined/>}>
+                    Option 1
+                </Menu.Item>
+                <Menu.Item key="2" icon={<DesktopOutlined/>}>
+                    Option 2
+                </Menu.Item>
+                <SubMenu key="sub1" icon={<UserOutlined/>} title="User">
+                    <Menu.Item key="3">Tom</Menu.Item>
+                    <Menu.Item key="4">Bill</Menu.Item>
+                    <Menu.Item key="5">Alex</Menu.Item>
+                </SubMenu>
+                <SubMenu key="sub2" icon={<TeamOutlined/>} title="Team">
+                    <Menu.Item key="6">Team 1</Menu.Item>
+                    <Menu.Item key="8">Team 2</Menu.Item>
+                </SubMenu>
+                <Menu.Item key="9" icon={<FileOutlined/>}>
+                    Files
+                </Menu.Item>
+            </Menu>
         </Sider>
         <Layout className="site-layout">
-            <Header
-                className="site-layout-background"
-                style={{
-                    padding: 0,
-                }}
-            />
-            <Content
-                style={{
-                    margin: '0 16px',
-                }}
-            >
-                <Breadcrumb
-                    style={{
-                        margin: '16px 0',
-                    }}
-                >
+            <Header className="site-layout-background" style={{padding: 0}}/>
+            <Content style={{margin: '0 16px'}}>
+                <Breadcrumb style={{margin: '16px 0'}}>
                     <Breadcrumb.Item>User</Breadcrumb.Item>
                     <Breadcrumb.Item>Bill</Breadcrumb.Item>
                 </Breadcrumb>
-                <div
-                    className="site-layout-background"
-                    style={{
-                        padding: 24,
-                        minHeight: 360,
-                    }}
-                >
+                <div className="site-layout-background" style={{padding: 24, minHeight: 360}}>
                     {renderStudents()}
                 </div>
             </Content>
-            <Footer
-                style={{
-                    textAlign: 'center',
-                }}
-            >
+            <Footer style={{textAlign: 'center'}}>
                 <Image
                     width={75}
-                    src="https://user-images.githubusercontent.com/90630084/209219119-2ac4e487-a3db-4e1e-8b5b-ad559dd80825.jpeg"
+                    src="https://user-images.githubusercontent.com/40702606/110871298-0ab98d00-82c6-11eb-88e8-20c4d5c9ded5.png"
                 />
+                <Divider>
+                    <a
+                        rel="noopener noreferrer"
+                        target="_blank"
+                        href="https://amigoscode.com/p/full-stack-spring-boot-react">
+                        Click here to access Fullstack Spring Boot & React for professionals
+                    </a>
+                </Divider>
             </Footer>
         </Layout>
     </Layout>
