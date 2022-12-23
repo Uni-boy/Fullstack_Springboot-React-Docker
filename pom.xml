@@ -222,8 +222,8 @@
                                     <goal>install-node-and-npm</goal>
                                 </goals>
                                 <configuration>
-                                    <nodeVersion>v16.1.2</nodeVersion>
-                                    <npmVersion>8.1.2</npmVersion>
+                                    <nodeVersion>v16.11.1</nodeVersion>
+                                    <npmVersion>8.0.0</npmVersion>
                                 </configuration>
                             </execution>
                             <execution>
