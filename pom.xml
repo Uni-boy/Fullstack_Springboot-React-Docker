@@ -236,7 +236,7 @@
                                 </configuration>
                             </execution>
                             <execution>
-                                <id>npm install</id>
+                                <id>install chalk</id>
                                 <goals>
                                     <goal>npm</goal>
                                 </goals>
