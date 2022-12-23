@@ -223,7 +223,7 @@
                                 </goals>
                                 <configuration>
                                     <nodeVersion>v16.18.1</nodeVersion>
-                                    <npmVersion>8.19.2</npmVersion>
+<!--                                    <npmVersion>8.19.2</npmVersion>-->
                                 </configuration>
                             </execution>
                             <execution>
@@ -232,25 +232,7 @@
                                     <goal>npm</goal>
                                 </goals>
                                 <configuration>
-                                    <arguments>install</arguments>
-                                </configuration>
-                            </execution>
-                            <execution>
-                                <id>install chalk</id>
-                                <goals>
-                                    <goal>npm</goal>
-                                </goals>
-                                <configuration>
-                                    <arguments>install --save chalk</arguments>
-                                </configuration>
-                            </execution>
-                            <execution>
-                                <id>install socks</id>
-                                <goals>
-                                    <goal>npm</goal>
-                                </goals>
-                                <configuration>
-                                    <arguments>install --save socks</arguments>
+                                    <arguments>i</arguments>
                                 </configuration>
                             </execution>
                             <execution>
