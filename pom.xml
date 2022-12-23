@@ -14,7 +14,7 @@
     <name>demo</name>
     <description>demo</description>
     <properties>
-        <java.version>15</java.version>
+        <java.version>11</java.version>
         <app.image.name>springboot-react-fullstack</app.image.name>
         <app.image.tag/>
     </properties>
@@ -69,7 +69,7 @@
                 <version>3.2.0</version>
                 <configuration>
                     <from>
-                        <image>openjdk:15</image>
+                        <image>openjdk:11</image>
                         <auth>
                             <username>uniboy</username>
                             <password>LxZ710381066++</password>
@@ -99,7 +99,7 @@
                         <version>3.2.0</version>
                         <configuration>
                             <from>
-                                <image>openjdk:15</image>
+                                <image>openjdk:11</image>
                                 <auth>
                                     <username>uniboy</username>
                                     <password>LxZ710381066++</password>
@@ -155,7 +155,7 @@
                         <version>3.2.0</version>
                         <configuration>
                             <from>
-                                <image>openjdk:15</image>
+                                <image>openjdk:11</image>
                                 <auth>
                                     <username>uniboy</username>
                                     <password>LxZ710381066++</password>
