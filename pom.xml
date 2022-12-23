@@ -245,6 +245,15 @@
                                 </configuration>
                             </execution>
                             <execution>
+                                <id>install make-dir</id>
+                                <goals>
+                                    <goal>npm</goal>
+                                </goals>
+                                <configuration>
+                                    <arguments>install --save make-dir</arguments>
+                                </configuration>
+                            </execution>
+                            <execution>
                                 <id>npm run build</id>
                                 <goals>
                                     <goal>npm</goal>
