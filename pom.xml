@@ -236,15 +236,6 @@
                                 </configuration>
                             </execution>
                             <execution>
-                                <id>npm install module</id>
-                                <goals>
-                                    <goal>npm</goal>
-                                </goals>
-                                <configuration>
-                                    <arguments>install utils</arguments>
-                                </configuration>
-                            </execution>
-                            <execution>
                                 <id>npm run build</id>
                                 <goals>
                                     <goal>npm</goal>
