@@ -230,8 +230,8 @@ function App() {
                     <a
                         rel="noopener noreferrer"
                         target="_blank"
-                        href="https://amigoscode.com/p/full-stack-spring-boot-react">
-                        Click here to access Fullstack Spring Boot & React for professionals
+                        href="https://www.google.com/">
+                        Click here to access Google
                     </a>
                 </Divider>
             </Footer>
